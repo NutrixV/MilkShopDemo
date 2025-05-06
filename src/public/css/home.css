@@ -9,6 +9,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 .site-content {
     flex: 1 0 auto;
@@ -152,17 +153,15 @@ body {
 }
 .hero-right {
     flex: 1;
-    background: #e9f1f8;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .hero-img {
-    max-width: 320px;
+    max-width: 430px;
     width: 100%;
     height: auto;
     border-radius: 12px;
-    margin: 32px;
     background: #fff;
     box-shadow: 0 2px 8px #e0e0e0;
 }
@@ -221,7 +220,7 @@ body {
     display: flex;
     gap: 32px;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 
 /* --- CART PAGE --- */
@@ -449,13 +448,7 @@ body {
     background: #fafbfc;
     box-shadow: 0 2px 16px #f0f0f0;
 }
-.product-info-block {
-    flex: 1;
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 2px 12px #ececec;
-    padding: 44px 48px 44px 48px;
-}
+
 .product-title {
     font-size: 48px;
     font-weight: 800;
@@ -527,7 +520,6 @@ body {
     padding: 13px 38px;
     cursor: pointer;
     transition: background 0.2s;
-    margin-left: 10px;
 }
 .add-to-cart-btn-lg:hover {
     background: #409eff;
@@ -635,7 +627,7 @@ body {
     display: flex;
     gap: 32px;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 .product-card {
     background: #fff;
@@ -645,6 +637,7 @@ body {
     width: 200px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 10px #f6f6f6;
     transition: box-shadow 0.2s, border 0.2s;
@@ -733,46 +726,180 @@ body {
         padding: 12px 8px;
     }
 }
-@media (max-width: 650px) {
+@media (max-width: 768px) {
+    /* Основний контейнер */
     .homepage-hero {
-        flex-direction: column;
+        margin: 20px auto;
+        border-radius: 12px;
     }
-    .hero-left,
-    .hero-right {
-        padding: 18px 8px;
-    }
+
+    /* Заголовок на головній */
     .hero-title {
-        font-size: 32px;
+        font-size: 36px;
+        margin-bottom: 12px;
     }
+    
+    /* Опис під заголовком */
     .hero-desc {
-        font-size: 15px;
+        font-size: 16px;
+        margin-bottom: 20px;
     }
+    
+    /* Кнопка в hero-секції */
     .hero-btn {
-        font-size: 15px;
-        padding: 10px 18px;
+        font-size: 16px;
+        padding: 10px 24px;
+        width: 120px;
     }
+    
+    /* Блок з зображенням */
+    .hero-right {
+        padding: 15px;
+    }
+    
+    /* Розмір зображення */
+    .hero-img {
+        max-width: 240px;
+        margin: 10px auto;
+    }
+    
+    /* Заголовки категорій і рекомендованих */
     .categories-title,
     .featured-title {
-        font-size: 22px;
+        font-size: 26px;
+        margin-bottom: 15px;
+        text-align: center;
     }
-    .category-chip {
-        font-size: 14px;
-        padding: 8px 12px;
+    
+    /* Більш компактні картки товарів */
+    .featured-list {
+        justify-content: space-between;
+        gap: 20px;
     }
+    
+    /* Адаптивний розмір карток */
     .product-card {
-        width: 45%;
+        width: calc(100% - 24px);
         min-width: 140px;
-        max-width: 180px;
-        padding: 10px 5px;
     }
+}
+
+@media (max-width: 576px) {
+    /* Ще менший заголовок */
+    .hero-title {
+        font-size: 30px;
+    }
+    
+    /* Компактніший опис */
+    .hero-desc {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    /* Зменшення блоку категорій */
+    .homepage-categories {
+        margin: 30px auto 0 auto;
+    }
+    
+    /* Більш компактні категорії */
+    .categories-list {
+        gap: 10px;
+    }
+    
+    .category-chip {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    /* Зменшення розміру зображення */
+    .hero-img {
+        max-width: 200px;
+    }
+    
+    /* Компактніші картки продуктів */
+    .product-card {
+        padding: 12px 8px;
+    }
+    
+    /* Зменшення розміру зображення продукту */
     .product-img {
         width: 80px;
         height: 80px;
+        margin-bottom: 12px;
     }
-    .footer-content,
-    .header-content {
-        padding: 18px 6px;
-        font-size: 16px;
+    
+    /* Зменшення тексту в картці */
+    .product-name {
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+    
+    .product-price {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+    
+    /* Кнопка додавання в кошик */
+    .add-to-cart-btn {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 420px) {
+    /* Структура hero-секції */
+    .hero-left {
+        padding: 25px 15px;
+    }
+    
+    /* Елементи hero */
+    .hero-title {
+        font-size: 26px;
+    }
+    
+    .hero-desc {
+        font-size: 13px;
+        margin-bottom: 16px;
+    }
+    
+    .hero-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+        width: 100px;
+    }
+    
+    /* Зменшення відстаней */
+    .homepage-categories {
+        margin: 24px auto 0 auto;
+    }
+    
+    .categories-title,
+    .featured-title {
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+    
+    /* Зміна розташування карток товарів */
+    .featured-list {
+        gap: 15px;
+    }
+    
+    /* Ще менші картки */
+    .product-card {
+        width: calc(100% - 15px);
+        min-width: 120px;
+    }
+    
+    /* Ще менші зображення продуктів */
+    .product-img {
+        width: 70px;
+        height: 70px;
+    }
+    
+    /* Дуже компактна кнопка */
+    .add-to-cart-btn {
+        font-size: 12px;
+        padding: 6px 10px;
     }
 }
 
@@ -1006,6 +1133,12 @@ body {
     color: #888;
     font-size: 0.9em;
     margin-right: 4px;
+}
+
+.sidebar-filters .filter-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 @media (max-width: 900px) {
     .accordions-wrapper {
@@ -1241,4 +1374,16 @@ body {
     width: 100%;
     margin-top: 12px;
     flex: 1;
+}
+
+@media (max-width: 650px) {
+    .footer-content,
+    .header-content {
+        padding: 18px 6px;
+        font-size: 16px;
+    }
+    
+    .homepage-hero {
+        flex-direction: column;
+    }
 }

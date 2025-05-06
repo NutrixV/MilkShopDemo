@@ -254,7 +254,7 @@ Route::get('/customer', function (\Illuminate\Http\Request $request) {
     ]);
     
     return view('customer', compact('customer', 'orders'));
-})->name('customer');
+})->name('customer.profile');
 
 // Customer registration
 Route::post('/register-customer', [\App\Http\Controllers\CustomerAuthController::class, 'register'])->name('customer.register');
@@ -264,3 +264,7 @@ Route::post('/login-customer', [\App\Http\Controllers\CustomerAuthController::cl
 
 // Customer logout
 Route::post('/logout-customer', [\App\Http\Controllers\CustomerAuthController::class, 'logout'])->name('customer.logout');
+
+// Search page
+Route::get('/search', [\App\Http\Controllers\ProductController::class, 'search'])->name('search');
+

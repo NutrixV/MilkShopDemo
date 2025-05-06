@@ -2,13 +2,33 @@
 
 @section('title', $category->name . ' | Dairy Shop')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+@endpush
+
 @section('content')
 <meta name="category-id" content="{{ $category->id }}">
 <div class="category-page" data-category-id="{{ $category->id }}">
+    <button id="filter-toggle" class="filter-toggle-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+        </svg>
+        Фільтри
+    </button>
+    
     <div class="category-sidebar">
+        <div class="mobile-filter-header">
+            <h3>Фільтри</h3>
+            <button id="close-filters" class="close-filters-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
         <div class="accordions-wrapper">
             <form method="GET" class="sidebar-filters">
-                <div style="margin-top:16px;">
+                <div class="filter-buttons" style="margin-top:16px;">
                     <button type="submit" class="btn btn-primary">Фільтрувати</button>
                     <a href="?" class="btn btn-light" id="reset-filters">Скинути</a>
                 </div>
@@ -152,4 +172,24 @@
     </div>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Filter toggle functionality for mobile
+    const filterToggleBtn = document.getElementById('filter-toggle');
+    const closeFiltersBtn = document.getElementById('close-filters');
+    const sidebar = document.querySelector('.category-sidebar');
+    
+    if(filterToggleBtn && sidebar && closeFiltersBtn) {
+        filterToggleBtn.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when filter is open
+        });
+        
+        closeFiltersBtn.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        });
+    }
+});
+</script>
 @endsection

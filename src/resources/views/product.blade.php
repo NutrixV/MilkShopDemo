@@ -2,6 +2,10 @@
 
 @section('title', $product->name . ' | Молочна продукція')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/product.css') }}">
+@endpush
+
 @section('content')
 <div class="breadcrumbs-wrapper">
     <div class="container">

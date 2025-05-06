@@ -3,6 +3,9 @@
 @section('title', 'Customer Page')
 
 @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/customer.css') }}">
+@endpush
+
 @section('content')
 <div class="customer-page">
     <div class="customer-sidebar">

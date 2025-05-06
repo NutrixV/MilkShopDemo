@@ -10,7 +10,7 @@
         <a href="/category" class="hero-btn">Купити</a>
     </div>
     <div class="hero-right">
-        <img src="/images/milkProduction.png" alt="Виробництво молока" class="hero-img">
+        <img src="/images/milkProduction.jpg" alt="Виробництво молока" class="hero-img">
     </div>
 </div>
 
