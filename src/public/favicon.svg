@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Круглий фон -->
+  <circle cx="32" cy="32" r="30" fill="#add8e6" />
+  
+  <!-- Крапля молока -->
+  <path d="M32 10 C38 20 48 30 48 40 C48 48 40 54 32 54 C24 54 16 48 16 40 C16 30 26 20 32 10 Z" fill="white" />
+  
+  <!-- Відблиск на краплі -->
+  <path d="M28 22 C26 28 24 34 24 38 C24 42 28 46 32 46 C33 46 34 45.8 35 45.5" fill="none" stroke="#f0f0f0" stroke-width="3" stroke-linecap="round" />
+</svg> 

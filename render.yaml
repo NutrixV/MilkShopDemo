@@ -1,0 +1,53 @@
+services:
+  - type: web
+    name: milkshop
+    env: docker
+    repo: https://github.com/NutrixV/MilkShopDemo.git
+    dockerfilePath: ./Dockerfile.render
+    envVars:
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: milkshop-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: milkshop-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: milkshop-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: milkshop-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: milkshop-db
+          property: password
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_DEBUG
+        value: false
+      - key: APP_ENV
+        value: production
+      - key: APP_URL
+        value: https://milkshop-w9rt.onrender.com
+      - key: ASSET_URL
+        value: https://milkshop-w9rt.onrender.com
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_DOMAIN
+        value: milkshop-w9rt.onrender.com
+      - key: SESSION_SECURE_COOKIE
+        value: true
+      - key: SESSION_SAME_SITE
+        value: lax
+
+databases:
+  - name: milkshop-db
+    databaseName: milkshop
+    user: milkshop
+    plan: free 

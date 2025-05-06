@@ -1,0 +1,16 @@
+.git
+.github
+.gitignore
+.env
+src/node_modules
+src/vendor
+src/storage/logs/*
+src/storage/app/*
+src/storage/framework/cache/*
+src/storage/framework/sessions/*
+src/storage/framework/views/*
+*.md
+docker-compose*
+Dockerfile*
+!Dockerfile
+!Dockerfile.render 

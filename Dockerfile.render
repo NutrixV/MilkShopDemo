@@ -1,0 +1,71 @@
+FROM php:8.2-cli
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpq-dev \
+    unzip \
+    libzip-dev \
+    zip \
+    libicu-dev \
+    postgresql-client \
+    && docker-php-ext-install pdo pdo_pgsql zip pcntl \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl
+
+# Install Composer
+COPY --from=composer:2.5 /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /app
+
+# Copy application files
+COPY . /app
+
+# Create .env file if it doesn't exist
+RUN if [ ! -f "/app/src/.env" ]; then cp /app/src/.env.example /app/src/.env || echo "APP_KEY=" > /app/src/.env; fi
+
+# Make sure VerifyCsrfToken middleware exists
+RUN mkdir -p /app/src/app/Http/Middleware
+RUN if [ ! -f "/app/src/app/Http/Middleware/VerifyCsrfToken.php" ]; then \
+    echo '<?php namespace App\Http\Middleware; use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware; class VerifyCsrfToken extends Middleware { protected $except = []; }' > /app/src/app/Http/Middleware/VerifyCsrfToken.php; \
+    fi
+
+# Install dependencies
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN cd src && composer install --no-dev --optimize-autoloader
+
+RUN cd src && COMPOSER_MEMORY_LIMIT=-1 composer require --no-interaction fakerphp/faker
+
+# Publish Livewire assets during build
+RUN cd src && php artisan vendor:publish --force --tag=livewire:assets
+
+# Set permissions
+RUN chown -R www-data:www-data /app/src
+RUN chmod -R 775 /app/src/storage /app/src/bootstrap/cache
+RUN chmod -R 775 /app/src/public
+
+# Create symlinks
+RUN cd src && php artisan storage:link
+
+# Explicitly define environment variables with fallbacks
+ENV DB_CONNECTION=${DB_CONNECTION:-pgsql}
+ENV DB_HOST=${DB_HOST:-db}
+ENV DB_PORT=${DB_PORT:-5432}
+ENV DB_DATABASE=${DB_DATABASE:-milkshop}
+ENV DB_USERNAME=${DB_USERNAME:-milkshop}
+ENV DB_PASSWORD=${DB_PASSWORD:-milkshop}
+ENV SESSION_DOMAIN=${SESSION_DOMAIN:-localhost}
+ENV SESSION_SECURE_COOKIE=${SESSION_SECURE_COOKIE:-false}
+ENV SESSION_SAME_SITE=${SESSION_SAME_SITE:-lax}
+
+# Expose port (Render will set the PORT environment variable)
+EXPOSE ${PORT:-8080}
+
+# Create start.sh script file 
+COPY ./docker-entrypoint.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
+# Start the server
+CMD ["/app/start.sh"] 
