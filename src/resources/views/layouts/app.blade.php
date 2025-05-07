@@ -56,7 +56,7 @@
                             @endphp
                             @if($customer)
                                 <span style="padding: 12px 24px; font-weight: bold;">{{ $customer->name }}</span>
-                                <a href="{{ route('customer') }}">Кабінет</a>
+                                <a href="{{ route('customer.profile') }}">Кабінет</a>
                                 <a href="#" onclick="logoutCustomer(event)">Logout</a>
                             @else
                                 <a href="#" onclick="openLoginPopup(event)">Login</a>
