@@ -15,6 +15,23 @@ php artisan route:clear
 php artisan view:clear
 php artisan cache:clear
 
+# Run tests if environment variable is set
+if [ "$RUN_TESTS" = "true" ]; then
+  echo "Running tests during deployment..."
+  
+  # Перевіряємо, чи вказана група тестів для запуску
+  if [ -n "$TEST_GROUP" ]; then
+    echo "Running tests for group: $TEST_GROUP"
+    php artisan test --group="$TEST_GROUP" || echo "Some tests failed but continuing deployment as this is a non-blocking check"
+  else
+    # Запускаємо всі тести, крім повільних або нестабільних
+    echo "Running stable tests (excluding search tests)"
+    php artisan test --exclude-group="search,unstable" || echo "Some tests failed but continuing deployment as this is a non-blocking check"
+  fi
+  
+  echo "Test results reported. Deployment continues regardless of test results."
+fi
+
 # Publish Livewire assets
 echo "Publishing Livewire assets..."
 php artisan vendor:publish --force --tag=livewire:assets

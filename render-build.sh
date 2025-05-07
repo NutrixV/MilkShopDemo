@@ -7,14 +7,26 @@ echo "Running render-build.sh script..."
 echo "Copying .env.render to .env"
 cp src/.env.render src/.env
 
-# Install dependencies
+# Install dependencies (включно з dev dependencies для тестів)
 echo "Installing dependencies"
 cd src
-composer install --no-dev --optimize-autoloader
+composer install --optimize-autoloader
 composer require --no-interaction fakerphp/faker
 
 # Generate key if not already set
 php artisan key:generate --force
+
+# Запуск тестів
+echo "Running tests..."
+php artisan test
+
+# Якщо тести не пройшли, виходимо з ненульовим кодом, щоб зупинити деплой
+if [ $? -ne 0 ]; then
+    echo "Tests failed! Stopping deployment."
+    exit 1
+fi
+
+echo "Tests passed successfully! Continuing with deployment..."
 
 # Make sure we have the bootstrap/app.php with middleware configuration
 mkdir -p bootstrap
@@ -81,5 +93,10 @@ php artisan storage:link
 
 # Publish Livewire assets
 php artisan vendor:publish --force --tag=livewire:assets
+
+# Після тестів і перед деплоєм очищуємо залежності для розробки
+echo "Reinstalling dependencies for production..."
+rm -rf vendor
+composer install --no-dev --optimize-autoloader
 
 echo "Build completed successfully" 
